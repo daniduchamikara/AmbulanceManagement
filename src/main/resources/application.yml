@@ -1,0 +1,23 @@
+spring:
+  security:
+    enabled: false
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/ambulance_management
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+server:
+  port: 8338
+  servlet:
+    context-path: /ambulance-management
+
