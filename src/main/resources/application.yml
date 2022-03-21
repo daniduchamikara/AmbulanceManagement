@@ -17,7 +17,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect
 server:
-  port: 8338
   servlet:
-    context-path: /ambulance-management
+    context-path: /ambulnce-mngmnt
+
+  port: 8285
 

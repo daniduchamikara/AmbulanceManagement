@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/amb-manage-api")
+@RequestMapping("/api")
 public class managementController {
 
     AmbulanceService ambulanceService;
@@ -17,8 +17,25 @@ public class managementController {
     }
 
     @PostMapping("/register-ambulance")
-    public CommonJsonResponse registerCustomer(@RequestBody AmbulanceDto ambulanceDto){
+    public CommonJsonResponse registerAmbulance(@RequestBody AmbulanceDto ambulanceDto){
         return ambulanceService.registerNewAmbulance(ambulanceDto);
     }
+
+    @PostMapping("/remove-ambulance")
+    public CommonJsonResponse removeAmbulance(@RequestBody AmbulanceDto ambulanceDto){
+        return ambulanceService.deleteAmbulance(ambulanceDto);
+    }
+
+    @PostMapping("/update-ambulance")
+    public CommonJsonResponse updateAmbulance(@RequestBody AmbulanceDto ambulanceDto){
+        return ambulanceService.updateAmbulance(ambulanceDto);
+    }
+
+    @GetMapping("/view-all")
+    public CommonJsonResponse viewAllAmbulance(){
+        return ambulanceService.viewAllAmbulance();
+    }
+
+
 
 }

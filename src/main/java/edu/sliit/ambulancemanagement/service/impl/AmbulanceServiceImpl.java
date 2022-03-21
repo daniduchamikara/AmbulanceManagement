@@ -10,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class AmbulanceServiceImpl implements AmbulanceService {
 
     AmbulanceRepo ambulanceRepo;
 
-    CommonJsonResponse jsonResponse=new CommonJsonResponse();
+    CommonJsonResponse jsonResponse = new CommonJsonResponse();
 
     public AmbulanceServiceImpl(AmbulanceRepo ambulanceRepo) {
         this.ambulanceRepo = ambulanceRepo;
@@ -24,34 +26,69 @@ public class AmbulanceServiceImpl implements AmbulanceService {
 
     @Override
     public CommonJsonResponse registerNewAmbulance(AmbulanceDto ambulanceDto) {
-        AmbulanceModel ambulanceModel=new AmbulanceModel();
+        AmbulanceModel ambulanceModel = new AmbulanceModel();
         ambulanceModel.setVehicleModel(ambulanceDto.getVehicleModel());
         ambulanceModel.setLicensePlate(ambulanceDto.getLicensePlate());
         ambulanceModel.setOther(ambulanceDto.getOther());
 
-        AmbulanceModel response=ambulanceRepo.save(ambulanceModel);
-        if (response.getAmbulanceId()>0){
+        AmbulanceModel response = ambulanceRepo.save(ambulanceModel);
+        if (response.getAmbulanceId() > 0) {
             jsonResponse.setStatus(HttpStatus.OK.value());
             jsonResponse.setMessage("Successfully Registered");
-        }else{
+        } else {
             jsonResponse.setStatus(HttpStatus.BAD_REQUEST.value());
             jsonResponse.setMessage("Not Successful Please Check Your In puts");
         }
-        return null;
+        return jsonResponse;
     }
 
     @Override
     public CommonJsonResponse updateAmbulance(AmbulanceDto ambulanceDto) {
-        return null;
+        AmbulanceModel ambulanceModel = new AmbulanceModel();
+        ambulanceModel.setAmbulanceId(ambulanceDto.getAmbulanceId());
+        ambulanceModel.setVehicleModel(ambulanceDto.getVehicleModel());
+        ambulanceModel.setLicensePlate(ambulanceDto.getLicensePlate());
+        ambulanceModel.setOther(ambulanceDto.getOther());
+
+        AmbulanceModel response = ambulanceRepo.save(ambulanceModel);
+        if (response.getAmbulanceId() > 0) {
+            jsonResponse.setStatus(HttpStatus.OK.value());
+            jsonResponse.setMessage("Successfully Registered");
+        } else {
+            jsonResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+            jsonResponse.setMessage("Not Successful Please Check Your In puts");
+        }
+        return jsonResponse;
     }
 
     @Override
-    public CommonJsonResponse deleteAmbulance(int ambulanceId) {
-        return null;
+    public CommonJsonResponse deleteAmbulance(AmbulanceDto ambulanceDto) {
+        AmbulanceModel ambulanceModel = new AmbulanceModel();
+        ambulanceModel.setVehicleModel(ambulanceDto.getVehicleModel());
+        ambulanceModel.setLicensePlate(ambulanceDto.getLicensePlate());
+        ambulanceModel.setOther(ambulanceDto.getOther());
+        ambulanceRepo.delete(ambulanceModel);
+
+        jsonResponse.setStatus(HttpStatus.OK.value());
+        jsonResponse.setMessage("Successfully Registered");
+
+        return jsonResponse;
     }
 
     @Override
     public CommonJsonResponse viewAllAmbulance() {
-        return null;
+        List<AmbulanceDto> ambulanceDtoList= new ArrayList<>();
+        List<AmbulanceModel> ambulanceModels= ambulanceRepo.findAll();
+        for (AmbulanceModel ambulanceModel: ambulanceModels){
+            AmbulanceDto ambulanceDto=new AmbulanceDto();
+            ambulanceDto.setAmbulanceId(ambulanceModel.getAmbulanceId());
+            ambulanceDto.setLicensePlate(ambulanceModel.getLicensePlate());
+            ambulanceDto.setVehicleModel(ambulanceModel.getVehicleModel());
+            ambulanceDto.setOther(ambulanceModel.getOther());
+            ambulanceDtoList.add(ambulanceDto);
+        }
+        jsonResponse.setStatus(HttpStatus.OK.value());
+        jsonResponse.setData(ambulanceDtoList);
+        return jsonResponse;
     }
 }
