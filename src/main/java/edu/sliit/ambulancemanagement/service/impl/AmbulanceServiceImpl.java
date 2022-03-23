@@ -53,7 +53,7 @@ public class AmbulanceServiceImpl implements AmbulanceService {
         AmbulanceModel response = ambulanceRepo.save(ambulanceModel);
         if (response.getAmbulanceId() > 0) {
             jsonResponse.setStatus(HttpStatus.OK.value());
-            jsonResponse.setMessage("Successfully Registered");
+            jsonResponse.setMessage("Successfully Updated");
         } else {
             jsonResponse.setStatus(HttpStatus.BAD_REQUEST.value());
             jsonResponse.setMessage("Not Successful Please Check Your In puts");
@@ -64,19 +64,20 @@ public class AmbulanceServiceImpl implements AmbulanceService {
     @Override
     public CommonJsonResponse deleteAmbulance(AmbulanceDto ambulanceDto) {
         AmbulanceModel ambulanceModel = new AmbulanceModel();
+        ambulanceModel.setAmbulanceId(ambulanceDto.getAmbulanceId());
         ambulanceModel.setVehicleModel(ambulanceDto.getVehicleModel());
         ambulanceModel.setLicensePlate(ambulanceDto.getLicensePlate());
         ambulanceModel.setOther(ambulanceDto.getOther());
         ambulanceRepo.delete(ambulanceModel);
 
         jsonResponse.setStatus(HttpStatus.OK.value());
-        jsonResponse.setMessage("Successfully Registered");
+        jsonResponse.setMessage("Successfully Deleted");
 
         return jsonResponse;
     }
 
     @Override
-    public CommonJsonResponse viewAllAmbulance() {
+    public List<AmbulanceDto> viewAllAmbulance() {
         List<AmbulanceDto> ambulanceDtoList= new ArrayList<>();
         List<AmbulanceModel> ambulanceModels= ambulanceRepo.findAll();
         for (AmbulanceModel ambulanceModel: ambulanceModels){
@@ -89,6 +90,6 @@ public class AmbulanceServiceImpl implements AmbulanceService {
         }
         jsonResponse.setStatus(HttpStatus.OK.value());
         jsonResponse.setData(ambulanceDtoList);
-        return jsonResponse;
+        return ambulanceDtoList;
     }
 }

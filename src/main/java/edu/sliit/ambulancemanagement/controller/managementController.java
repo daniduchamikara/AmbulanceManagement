@@ -5,6 +5,8 @@ import edu.sliit.ambulancemanagement.domain.http.CommonJsonResponse;
 import edu.sliit.ambulancemanagement.service.AmbulanceService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
@@ -32,7 +34,7 @@ public class managementController {
     }
 
     @GetMapping("/view-all")
-    public CommonJsonResponse viewAllAmbulance(){
+    public List<AmbulanceDto> viewAllAmbulance(){
         return ambulanceService.viewAllAmbulance();
     }
 
