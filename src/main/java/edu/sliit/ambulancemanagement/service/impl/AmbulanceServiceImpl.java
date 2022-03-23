@@ -44,7 +44,7 @@ public class AmbulanceServiceImpl implements AmbulanceService {
 
     @Override
     public CommonJsonResponse updateAmbulance(AmbulanceDto ambulanceDto) {
-        AmbulanceModel ambulanceModel = new AmbulanceModel();
+        AmbulanceModel ambulanceModel = ambulanceRepo.findByAmbulanceId(ambulanceDto.getAmbulanceId());
         ambulanceModel.setAmbulanceId(ambulanceDto.getAmbulanceId());
         ambulanceModel.setVehicleModel(ambulanceDto.getVehicleModel());
         ambulanceModel.setLicensePlate(ambulanceDto.getLicensePlate());
