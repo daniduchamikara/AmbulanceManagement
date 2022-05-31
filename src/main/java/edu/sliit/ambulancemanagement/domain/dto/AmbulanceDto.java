@@ -8,4 +8,5 @@ public class AmbulanceDto {
     String licensePlate;
     String vehicleModel;
     String other;
+    String Status;
 }

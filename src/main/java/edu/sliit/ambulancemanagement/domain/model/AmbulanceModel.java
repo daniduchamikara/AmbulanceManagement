@@ -14,5 +14,12 @@ public class AmbulanceModel {
     String licensePlate;
     String vehicleModel;
     String other;
+    String status;
 
+    public AmbulanceModel(String status) {
+        this.status = status;
+    }
+
+    public AmbulanceModel() {
+    }
 }
